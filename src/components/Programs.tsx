@@ -52,10 +52,10 @@ const fallbackPrograms: Program[] = [
     icon: Wrench,
     label: "Workshops",
     duration: "1â€“3 Days",
-    content: "Hands-on workshops on emerging topics â€” pick one and register before seats close.",
+    content: "Hands-on workshops on emerging topics  -  pick one and register before seats close.",
     workshops: [
       { title: "AI Agents from Scratch", hook: "Build & deploy an autonomous agent in a day.", date: "JUN 15", startsInDays: 0 },
-      { title: "K8s for Builders", hook: "Run real workloads on Kubernetes â€” hands on.", date: "JUL 02", startsInDays: 18 },
+      { title: "K8s for Builders", hook: "Run real workloads on Kubernetes  -  hands on.", date: "JUL 02", startsInDays: 18 },
       { title: "Edge AI on Device", hook: "Ship ML to phones & micro-devices.", date: "JUL 28", startsInDays: 44 },
     ],
     features: ["Internship", "Certification", "Training Complete", "Practical Session"],
@@ -350,7 +350,7 @@ const WorkshopCard = ({ w }: { w: Workshop }) => {
   );
 };
 
-// â”€â”€ Local type keeps icon as raw string for unambiguous grouping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -  -  Local type keeps icon as raw string for unambiguous grouping  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
 type TabId = "summer" | "winter" | "workshops";
 
 type ProgramItem = {
@@ -368,7 +368,7 @@ type ProgramItem = {
   unlockDate?: string | null;
 };
 
-// â”€â”€ Convert fallback Program[] (which use component refs) to ProgramItem[] â”€â”€â”€â”€
+//  -  -  Convert fallback Program[] (which use component refs) to ProgramItem[]  -  -  -  - 
 const toIconString = (icon: Program["icon"]): string => {
   if (typeof icon === "string") return icon;
   if (icon === Snowflake) return "Snowflake";
@@ -391,14 +391,14 @@ const fallbackItems: ProgramItem[] = fallbackPrograms.map((p) => ({
   unlockDate: null,
 }));
 
-// â”€â”€ Fixed 3 tabs â€” always rendered regardless of DB data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  -  -  Fixed 3 tabs  -  always rendered regardless of DB data  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
 const TABS: { id: TabId; label: string; Icon: typeof Sun }[] = [
   { id: "summer",    label: "Summer Internship", Icon: Sun       },
   { id: "winter",    label: "Winter Internship",  Icon: Snowflake },
   { id: "workshops", label: "Workshops",           Icon: Wrench    },
 ];
 
-// â”€â”€ ProgramCard â€” same visual design as CourseCard, driven by program fields â”€â”€
+//  -  -  ProgramCard  -  same visual design as CourseCard, driven by program fields  -  - 
 const ProgramCard = ({ prog, accent }: { prog: ProgramItem; accent: string }) => (
   <motion.div
     whileHover={{ y: -6 }}
@@ -539,7 +539,7 @@ const Programs = () => {
     void loadSettings();
   }, []);
 
-  // Group by raw icon string â€” simple, unambiguous, no component-ref comparison
+  // Group by raw icon string  -  simple, unambiguous, no component-ref comparison
   const summer    = items.filter((p) => p.icon === "Sun");
   const winter    = items.filter((p) => p.icon === "Snowflake");
   const workshops = items.filter((p) => p.icon === "Wrench");
@@ -560,12 +560,12 @@ const Programs = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <p className="font-mono text-xs tracking-[0.3em] text-primary mb-8">â€” PROGRAMS â€”</p>
+          <p className="font-mono text-xs tracking-[0.3em] text-primary mb-8"> -  PROGRAMS  - </p>
           <h2 className="font-display text-4xl md:text-6xl font-bold mb-8">Choose Your Orbit</h2>
         </motion.div>
 
         <div className="max-w-6xl mx-auto">
-          {/* â”€â”€ Fixed 3 tab buttons â€” always rendered â”€â”€ */}
+          {/*  -  -  Fixed 3 tab buttons  -  always rendered  -  -  */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             {TABS.map(({ id, label, Icon }) => (
               <button
@@ -583,7 +583,7 @@ const Programs = () => {
             ))}
           </div>
 
-          {/* â”€â”€ Tab panel â”€â”€ */}
+          {/*  -  -  Tab panel  -  -  */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -593,7 +593,7 @@ const Programs = () => {
               transition={{ duration: 0.5 }}
               className="rounded-3xl border border-border bg-card/40 backdrop-blur-md p-6 md:p-10"
             >
-              {/* â”€â”€ Summer â”€â”€ */}
+              {/*  -  -  Summer  -  -  */}
               {active === "summer" && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">
@@ -622,7 +622,7 @@ const Programs = () => {
                 </div>
               )}
 
-              {/* â”€â”€ Winter â€” cards if data exists, countdown fallback otherwise â”€â”€ */}
+              {/*  -  -  Winter  -  cards if data exists, countdown fallback otherwise  -  -  */}
               {active === "winter" && winter.length > 0 && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">
@@ -650,7 +650,7 @@ const Programs = () => {
                 </div>
               )}
 
-              {/* â”€â”€ Workshops â€” each program row becomes a WorkshopCard â”€â”€ */}
+              {/*  -  -  Workshops  -  each program row becomes a WorkshopCard  -  -  */}
               {active === "workshops" && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">

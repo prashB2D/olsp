@@ -1,6 +1,7 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { GraduationCap, TrendingUp, FolderGit2, Rocket } from "lucide-react";
+import ImpactRobot from "./robots/ImpactRobot";
 
 const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
@@ -27,20 +28,29 @@ const stats = [
   { icon: Rocket, num: 10, suffix: "+", label: "Project & System Builds", desc: "ERP, LMS, AI & enterprise solutions", shadow: "brutal-card-red" },
 ];
 
-const Impact = () => (
-  <section id="impact" className="relative py-32 paper-grid text-black">
-    <div className="container mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <p className="font-mono text-xs tracking-[0.3em] text-black/60 mb-4">— BY THE NUMBERS —</p>
-        <h2 className="font-display text-4xl md:text-6xl font-black text-black">OUR IMPACT</h2>
-      </motion.div>
+const Impact = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  return (
+    <section id="impact" ref={sectionRef} className="relative py-32 paper-grid text-black">
+      <ImpactRobot 
+        anchorRef={sectionRef} 
+        colors={{ bg: '#1a1a1a', accent: '#30d0de' }} 
+        topOffset={-40} 
+      />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 relative"
+        >
+          <p className="font-mono text-xs tracking-[0.3em] text-black/60 mb-4">— BY THE NUMBERS —</p>
+          <h2 className="font-display text-4xl md:text-6xl font-black text-black">OUR IMPACT</h2>
+        </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto relative z-10">
         {stats.map((s, i) => (
           <motion.div
             key={s.label}
@@ -59,8 +69,9 @@ const Impact = () => (
           </motion.div>
         ))}
       </div>
-    </div>
-  </section>
-);
+      </div>
+    </section>
+  );
+};
 
 export default Impact;

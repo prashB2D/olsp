@@ -1,8 +1,16 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Snowflake, Wrench, Clock, ArrowRight, Lock, Sparkles } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
+import { useLMS } from "@/context/LMSContext";
 import type { CourseData, ProgramData, WorkshopData } from "@/lib/demoSchemas";
+import "./ProgramsSpace.css";
+import summerImg from "@/assets/summer.jpg";
+import winterImg from "@/assets/winter.jpg";
+import workshopImg from "@/assets/workshop.png";
+import coconutChar from "@/assets/char_coconut (1).png";
+import icemanChar from "@/assets/char_iceman.png";
+import rocketChar from "@/assets/char_stand_rocket02 (1).png";
 
 type Course = CourseData;
 
@@ -52,10 +60,10 @@ const fallbackPrograms: Program[] = [
     icon: Wrench,
     label: "Workshops",
     duration: "1â€“3 Days",
-    content: "Hands-on workshops on emerging topics  -  pick one and register before seats close.",
+    content: "Hands-on workshops on emerging topics â€” pick one and register before seats close.",
     workshops: [
       { title: "AI Agents from Scratch", hook: "Build & deploy an autonomous agent in a day.", date: "JUN 15", startsInDays: 0 },
-      { title: "K8s for Builders", hook: "Run real workloads on Kubernetes  -  hands on.", date: "JUL 02", startsInDays: 18 },
+      { title: "K8s for Builders", hook: "Run real workloads on Kubernetes â€” hands on.", date: "JUL 02", startsInDays: 18 },
       { title: "Edge AI on Device", hook: "Ship ML to phones & micro-devices.", date: "JUL 28", startsInDays: 44 },
     ],
     features: ["Internship", "Certification", "Training Complete", "Practical Session"],
@@ -118,6 +126,7 @@ const isLocked = (prog: ProgramItem): boolean => {
 };
 
 const InternshipCard = ({ prog }: { prog: ProgramItem }) => {
+  const { openLMS } = useLMS();
   const [hovered, setHovered] = useState(false);
   const locked = isLocked(prog);
   const daysLeft = locked && prog.unlockDate ? daysUntil(prog.unlockDate) : 0;
@@ -198,7 +207,7 @@ const InternshipCard = ({ prog }: { prog: ProgramItem }) => {
                 <Lock size={14} /> Unlocks in {daysLeft}d
               </button>
             ) : (
-              <button className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg border-2 border-foreground/80 hover:bg-foreground/10 font-medium text-sm mt-4">
+              <button onClick={openLMS} className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg border-2 border-foreground/80 hover:bg-foreground/10 font-medium text-sm mt-4">
                 View More <ArrowRight size={14} />
               </button>
             )}
@@ -209,65 +218,9 @@ const InternshipCard = ({ prog }: { prog: ProgramItem }) => {
   );
 };
 
-const SummerBG = () => (
-  <motion.div key="summer-bg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}
-    className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute inset-0" style={{
-      background: "radial-gradient(ellipse 80% 60% at 80% 110%, hsl(35 100% 55% / 0.35), transparent 60%), radial-gradient(ellipse 60% 50% at 20% 100%, hsl(15 90% 50% / 0.25), transparent 60%), linear-gradient(180deg, transparent 50%, hsl(30 80% 25% / 0.15))"
-    }} />
-    <motion.div
-      initial={{ y: 200, scale: 0.8 }}
-      animate={{ y: 60, scale: 1 }}
-      transition={{ duration: 1.4, ease: "easeOut" }}
-      className="absolute bottom-0 right-1/4 w-72 h-72 rounded-full"
-      style={{ background: "radial-gradient(circle, hsl(45 100% 65%), hsl(25 100% 55% / 0.4) 50%, transparent 70%)", filter: "blur(2px)" }}
-    />
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      className="absolute bottom-[-100px] right-[15%] w-[500px] h-[500px] opacity-30"
-      style={{
-        background: "conic-gradient(from 0deg, transparent 0deg, hsl(45 100% 60% / 0.4) 10deg, transparent 20deg, transparent 40deg, hsl(45 100% 60% / 0.3) 50deg, transparent 60deg, transparent 90deg, hsl(45 100% 60% / 0.4) 100deg, transparent 110deg)"
-      }}
-    />
-  </motion.div>
-);
-
-const WinterBG = () => (
-  <motion.div key="winter-bg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}
-    className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute inset-0" style={{
-      background: "radial-gradient(ellipse 80% 60% at 50% -20%, hsl(200 90% 70% / 0.25), transparent 60%), linear-gradient(180deg, hsl(210 60% 15% / 0.4), transparent 70%)"
-    }} />
-    {[...Array(20)].map((_, i) => (
-      <motion.span
-        key={i}
-        initial={{ y: -30, x: Math.random() * 100 + "%", opacity: 0 }}
-        animate={{ y: "110vh", opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 8 + Math.random() * 6, repeat: Infinity, delay: Math.random() * 5, ease: "linear" }}
-        className="absolute text-white/60"
-        style={{ left: Math.random() * 100 + "%", fontSize: 8 + Math.random() * 14 }}
-      >
-        â„
-      </motion.span>
-    ))}
-  </motion.div>
-);
-
-const WorkshopBG = () => (
-  <motion.div key="workshop-bg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}
-    className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute inset-0" style={{
-      background: "radial-gradient(ellipse 60% 50% at 30% 30%, hsl(280 80% 50% / 0.25), transparent 60%), radial-gradient(ellipse 50% 40% at 70% 80%, hsl(190 90% 50% / 0.2), transparent 60%)"
-    }} />
-    <motion.div animate={{ rotate: 360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
-      <Wrench size={420} className="text-primary" strokeWidth={0.5} />
-    </motion.div>
-  </motion.div>
-);
-
-const CourseCard = ({ course, accent }: { course: Course; accent: string }) => (
+const CourseCard = ({ course, accent }: { course: Course; accent: string }) => {
+  const { openLMS } = useLMS();
+  return (
   <motion.div
     whileHover={{ y: -6 }}
     className="group/course relative rounded-2xl border-2 border-foreground/90 bg-background overflow-hidden shadow-[6px_6px_0_0_hsl(var(--foreground))] transition-shadow"
@@ -297,15 +250,17 @@ const CourseCard = ({ course, accent }: { course: Course; accent: string }) => (
             <span key={tag} className="text-[10px] font-mono px-2 py-1 rounded-md bg-secondary text-secondary-foreground">{tag}</span>
           ))}
         </div>
-        <button className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:gap-3 transition-all">
+        <button onClick={openLMS} className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:gap-3 transition-all">
           Explore <ArrowRight size={14} />
         </button>
       </div>
     </div>
   </motion.div>
-);
+  );
+};
 
 const WorkshopCard = ({ w }: { w: Workshop }) => {
+  const { openLMS } = useLMS();
   const locked = w.startsInDays > 0;
   return (
     <motion.div
@@ -340,7 +295,7 @@ const WorkshopCard = ({ w }: { w: Workshop }) => {
               <Lock size={14} /> Pre-Register
             </button>
           ) : (
-            <button className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm">
+            <button onClick={openLMS} className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm">
               View Details <ArrowRight size={14} />
             </button>
           )}
@@ -350,7 +305,7 @@ const WorkshopCard = ({ w }: { w: Workshop }) => {
   );
 };
 
-//  -  -  Local type keeps icon as raw string for unambiguous grouping  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
+// â”€â”€ Local type keeps icon as raw string for unambiguous grouping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 type TabId = "summer" | "winter" | "workshops";
 
 type ProgramItem = {
@@ -368,7 +323,7 @@ type ProgramItem = {
   unlockDate?: string | null;
 };
 
-//  -  -  Convert fallback Program[] (which use component refs) to ProgramItem[]  -  -  -  - 
+// â”€â”€ Convert fallback Program[] (which use component refs) to ProgramItem[] â”€â”€â”€â”€
 const toIconString = (icon: Program["icon"]): string => {
   if (typeof icon === "string") return icon;
   if (icon === Snowflake) return "Snowflake";
@@ -391,15 +346,17 @@ const fallbackItems: ProgramItem[] = fallbackPrograms.map((p) => ({
   unlockDate: null,
 }));
 
-//  -  -  Fixed 3 tabs  -  always rendered regardless of DB data  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
+// â”€â”€ Fixed 3 tabs â€” always rendered regardless of DB data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const TABS: { id: TabId; label: string; Icon: typeof Sun }[] = [
   { id: "summer",    label: "Summer Internship", Icon: Sun       },
   { id: "winter",    label: "Winter Internship",  Icon: Snowflake },
   { id: "workshops", label: "Workshops",           Icon: Wrench    },
 ];
 
-//  -  -  ProgramCard  -  same visual design as CourseCard, driven by program fields  -  - 
-const ProgramCard = ({ prog, accent }: { prog: ProgramItem; accent: string }) => (
+// â”€â”€ ProgramCard â€” same visual design as CourseCard, driven by program fields â”€â”€
+const ProgramCard = ({ prog, accent }: { prog: ProgramItem; accent: string }) => {
+  const { openLMS } = useLMS();
+  return (
   <motion.div
     whileHover={{ y: -6 }}
     className="group/prog relative rounded-2xl border-2 border-foreground/90 bg-background overflow-hidden shadow-[6px_6px_0_0_hsl(var(--foreground))] transition-shadow"
@@ -428,13 +385,14 @@ const ProgramCard = ({ prog, accent }: { prog: ProgramItem; accent: string }) =>
         {prog.content}
       </p>
       <div className="absolute inset-0 p-5 opacity-0 translate-y-2 group-hover/prog:opacity-100 group-hover/prog:translate-y-0 transition-all duration-300 bg-background flex flex-col justify-end">
-        <button className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:gap-3 transition-all">
+        <button onClick={openLMS} className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:gap-3 transition-all">
           Explore <ArrowRight size={14} />
         </button>
       </div>
     </div>
   </motion.div>
-);
+  );
+};
 
 const daysUntil = (dateStr: string): number => {
   const diff = new Date(dateStr).getTime() - Date.now();
@@ -539,7 +497,7 @@ const Programs = () => {
     void loadSettings();
   }, []);
 
-  // Group by raw icon string  -  simple, unambiguous, no component-ref comparison
+  // Group by raw icon string â€” simple, unambiguous, no component-ref comparison
   const summer    = items.filter((p) => p.icon === "Sun");
   const winter    = items.filter((p) => p.icon === "Snowflake");
   const workshops = items.filter((p) => p.icon === "Wrench");
@@ -552,20 +510,43 @@ const Programs = () => {
 
   return (
     <section id="programs" className="relative py-32 overflow-hidden">
-      <AnimatePresence mode="wait">
-        {active === "summer"    && <SummerBG />}
-        {active === "winter"    && <WinterBG />}
-        {active === "workshops" && <WorkshopBG />}
-      </AnimatePresence>
+      <div className="programs-space-bg">
+        <div id="program-stars"></div>
+        <div id="program-stars2"></div>
+        <div id="program-stars3"></div>
+        <div></div>
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <p className="font-mono text-xs tracking-[0.3em] text-primary mb-8"> -  PROGRAMS  - </p>
-          <h2 className="font-display text-4xl md:text-6xl font-bold mb-8">Choose Your Orbit</h2>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 flex items-center justify-center">
+          <div className="relative inline-flex items-center">
+            {active === "summer" && (
+              <motion.img
+                animate={{ y: [-10, 10, -10] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                src={coconutChar} alt="Coconut Character" className="w-32 h-32 md:w-56 md:h-56 object-contain absolute right-full mr-4 md:mr-8" />
+            )}
+            <div>
+              <p className="font-mono text-xs tracking-[0.3em] text-primary mb-4">– PROGRAMS –</p>
+              <h2 className="font-display text-4xl md:text-6xl font-bold">Choose Your Orbit</h2>
+            </div>
+            {active === "winter" && (
+              <motion.img
+                animate={{ y: [-10, 10, -10] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                src={icemanChar} alt="Iceman Character" className="w-32 h-32 md:w-56 md:h-56 object-contain absolute left-full ml-4 md:ml-8" />
+            )}
+            {active === "workshops" && (
+              <motion.img
+                animate={{ y: [-10, 10, -10] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                src={rocketChar} alt="Rocket Character" className="w-32 h-32 md:w-56 md:h-56 object-contain absolute right-full mr-4 md:mr-8" />
+            )}
+          </div>
         </motion.div>
 
         <div className="max-w-6xl mx-auto">
-          {/*  -  -  Fixed 3 tab buttons  -  always rendered  -  -  */}
+          {/* â”€â”€ Fixed 3 tab buttons â€” always rendered â”€â”€ */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             {TABS.map(({ id, label, Icon }) => (
               <button
@@ -573,7 +554,7 @@ const Programs = () => {
                 onClick={() => setActive(id)}
                 className={`inline-flex items-center gap-2 px-5 py-3 rounded-full border transition-all ${
                   active === id
-                    ? "bg-primary text-primary-foreground border-primary shadow-[0_0_30px_hsl(var(--primary)/0.4)]"
+                    ? "bg-primary text-primary-foreground border-primary"
                     : "border-border bg-card/30 hover:border-primary/40"
                 }`}
               >
@@ -583,7 +564,7 @@ const Programs = () => {
             ))}
           </div>
 
-          {/*  -  -  Tab panel  -  -  */}
+          {/* â”€â”€ Tab panel â”€â”€ */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -591,9 +572,12 @@ const Programs = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
-              className="rounded-3xl border border-border bg-card/40 backdrop-blur-md p-6 md:p-10"
+              className="rounded-3xl border border-border p-6 md:p-10 relative overflow-hidden bg-cover bg-center"
+              style={{ backgroundImage: `url(${active === "summer" ? summerImg : active === "winter" ? winterImg : workshopImg})` }}
             >
-              {/*  -  -  Summer  -  -  */}
+              <div className="absolute inset-0 bg-background/45 pointer-events-none z-0" />
+              <div className="relative z-10">
+              {/* â”€â”€ Summer â”€â”€ */}
               {active === "summer" && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">
@@ -622,7 +606,7 @@ const Programs = () => {
                 </div>
               )}
 
-              {/*  -  -  Winter  -  cards if data exists, countdown fallback otherwise  -  -  */}
+              {/* — Winter — cards if data exists, countdown fallback otherwise — */}
               {active === "winter" && winter.length > 0 && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">
@@ -642,7 +626,7 @@ const Programs = () => {
                 </div>
               )}
               {active === "winter" && winter.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-16 gap-6">
+                <div className="flex flex-col items-center justify-center py-16 gap-6 relative">
                   {settings.winterNextBatch
                     ? <Countdown targetDays={daysUntil(settings.winterNextBatch)} label="NEXT BATCH IN" />
                     : <p className="text-sm text-muted-foreground">No programs scheduled yet.</p>
@@ -650,7 +634,7 @@ const Programs = () => {
                 </div>
               )}
 
-              {/*  -  -  Workshops  -  each program row becomes a WorkshopCard  -  -  */}
+              {/* â”€â”€ Workshops â€” each program row becomes a WorkshopCard â”€â”€ */}
               {active === "workshops" && (
                 <div className="space-y-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-border">
@@ -678,6 +662,7 @@ const Programs = () => {
                   )}
                 </div>
               )}
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>

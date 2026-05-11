@@ -15,6 +15,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+
   return (
     <main className="space-bg min-h-screen overflow-x-hidden">
       <Navbar />
@@ -24,8 +25,10 @@ const Index = () => {
         <Solutions />
         <StudentExperience />
       </EarthBackground>
-      <MissionVision />
-      <Impact />
+      <div className="relative">
+        <MissionVision />
+        <Impact />
+      </div>
       <Certifications />
       <WhyOrbital />
       <Programs />

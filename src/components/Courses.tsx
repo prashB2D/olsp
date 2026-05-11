@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Brain, Code2, BarChart3, Cpu, Smartphone, Cloud, ArrowRight } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
+import { useLMS } from "@/context/LMSContext";
 import type { CourseData } from "@/lib/demoSchemas";
 
 const iconMap = {
@@ -30,6 +31,7 @@ const fallbackCourses: CourseData[] = [
 ];
 
 const Courses = () => {
+  const { openLMS } = useLMS();
   const [courses, setCourses] = useState<CourseData[]>(fallbackCourses);
 
   useEffect(() => {
@@ -104,7 +106,7 @@ const Courses = () => {
                       <span key={s} className="text-xs px-2 py-1 rounded-md bg-secondary text-secondary-foreground">{s}</span>
                     ))}
                   </div>
-                  <button className="inline-flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all mt-auto">
+                  <button onClick={openLMS} className="inline-flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all mt-auto">
                     View Details <ArrowRight size={14} />
                   </button>
                 </div>

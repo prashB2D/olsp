@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, User } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
 import type { TestimonialData } from "@/lib/demoSchemas";
 import gridBg from "@/assets/grid-bg.png";
+import "./Testimonials.css";
 
 const fallbackItems: TestimonialData[] = [
   { name: "Aarav Mehta", role: "Software Engineer Intern", text: "I shipped real production code in week 3. The workflow felt like an actual tech company — Git, reviews, deploys, the whole loop." },
@@ -60,28 +61,56 @@ const Testimonials = () => {
         <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground glow-text">Voices from Orbit</h2>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {items.map((t, i) => (
-          <motion.div
-            key={t.name}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            className="p-8 rounded-2xl border border-border bg-card/70 backdrop-blur-md relative overflow-hidden hover:border-primary/50 hover:shadow-[0_0_40px_hsl(var(--primary)/0.25)] transition-all duration-500"
-          >
-            <Quote className="absolute top-4 right-4 text-primary/15" size={56} />
-            <div className="flex gap-1 mb-4">
-              {[...Array(5)].map((_, j) => <Star key={j} size={14} className="fill-primary text-primary" />)}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4 }}
+        className="flex justify-center w-full"
+      >
+        <div className="wrap_card">
+          {items.slice(0, 3).map((t, i) => (
+            <div className="anim-card" key={t.name}>
+              <div className="page" style={{ margin: 0, width: 'calc(100% - 8px)', height: 'calc(100% - 8px)' }}>
+                <div className="margin"></div>
+                <div className="page-header">
+                  <div className="profile-icon">
+                    <User size={20} />
+                  </div>
+                  <div className="author-info">
+                    <p className="author-name">{t.name}</p>
+                    <p className="author-role">{t.role}</p>
+                  </div>
+                </div>
+                <div className="stars-container">
+                  {[...Array(5)].map((_, j) => (
+                    <Star key={j} size={16} className="star-gold" />
+                  ))}
+                </div>
+                <p className="testimonial-text">{t.text}</p>
+              </div>
             </div>
-            <p className="text-sm text-foreground/90 leading-relaxed mb-6 relative">{t.text}</p>
-            <div className="border-t border-border pt-4">
-              <p className="font-semibold text-foreground">{t.name}</p>
-              <p className="text-xs text-muted-foreground">{t.role}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+          ))}
+
+          <svg style={{ visibility: "hidden", width: 0, height: 0 }}>
+            <defs>
+              <linearGradient id="gradient-full" x1="0%" y1="0%" x2="120%" y2="120%">
+                <stop offset="0%" stopColor="#ffffff"></stop>
+                <stop offset="100%" stopColor="#ffffff00"></stop>
+              </linearGradient>
+              <linearGradient id="gradient-half" x1="-50%" y1="-50%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff"></stop>
+                <stop offset="100%" stopColor="#ffffff00"></stop>
+              </linearGradient>
+            </defs>
+          </svg>
+
+          <div className="lines">
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
+        </div>
+      </motion.div>
     </div>
   </section>
   );

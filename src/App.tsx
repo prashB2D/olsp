@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LMSProvider } from "./context/LMSContext";
+import LMSModal from "./components/lms/LMSModal";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import OrbitalERP from "./pages/solutions/OrbitalERP.tsx";
@@ -18,19 +20,22 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* Solution detail pages */}
-          <Route path="/solutions/orbital-academic-erp" element={<OrbitalERP />} />
-          <Route path="/solutions/ai-ml-solutions" element={<AiMlSolutions />} />
-          <Route path="/solutions/enterprise-applications" element={<EnterpriseApps />} />
-          <Route path="/solutions/orbital-learn" element={<OrbitalLearnPage />} />
-          <Route path="/solutions/talent-repository" element={<TalentRepository />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <LMSProvider>
+        <LMSModal />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            {/* Solution detail pages */}
+            <Route path="/solutions/orbital-academic-erp" element={<OrbitalERP />} />
+            <Route path="/solutions/ai-ml-solutions" element={<AiMlSolutions />} />
+            <Route path="/solutions/enterprise-applications" element={<EnterpriseApps />} />
+            <Route path="/solutions/orbital-learn" element={<OrbitalLearnPage />} />
+            <Route path="/solutions/talent-repository" element={<TalentRepository />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </LMSProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

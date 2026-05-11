@@ -21,16 +21,18 @@ const groups = [
 ];
 
 const WhyOrbital = () => (
-  <section className="relative py-32">
+  <section className="relative py-32" style={{ background: "#000000" }}>
     <div className="container mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-16"
+        className="text-left mb-16"
       >
-        <p className="font-mono text-xs tracking-[0.3em] text-primary mb-4">— WHY ORBITAL LEARN —</p>
-        <h2 className="font-display text-4xl md:text-6xl font-bold">Built like a real company.</h2>
+        <div>
+          <p className="font-mono text-xs tracking-[0.3em] text-primary mb-4">— WHY ORBITAL LEARN —</p>
+          <h2 className="font-display text-4xl md:text-6xl font-bold">Built like a real company.</h2>
+        </div>
       </motion.div>
 
       <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">

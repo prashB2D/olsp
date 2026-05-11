@@ -1,0 +1,104 @@
+.programs-space-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at bottom, #0d1218 0%, #000000 100%);
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.programs-space-bg #program-stars,
+.programs-space-bg #program-stars2,
+.programs-space-bg #program-stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+}
+
+.programs-space-bg #program-stars {
+  width: 1px;
+  height: 1px;
+  box-shadow:
+    91px 140px #fff, 237px 390px #fff, 401px 122px #fff, 560px 310px #fff, 722px 98px #fff,
+    840px 410px #fff, 1001px 201px #fff, 1160px 370px #fff, 1331px 164px #fff, 1490px 428px #fff,
+    1660px 212px #fff, 1799px 140px #fff, 1880px 360px #fff, 64px 620px #fff, 220px 740px #fff,
+    380px 520px #fff, 533px 690px #fff, 680px 560px #fff, 824px 780px #fff, 970px 620px #fff,
+    1110px 710px #fff, 1288px 570px #fff, 1430px 760px #fff, 1604px 610px #fff, 1760px 770px #fff,
+    1900px 660px #fff, 70px 980px #fff, 240px 890px #fff, 390px 1040px #fff, 550px 910px #fff,
+    700px 1080px #fff, 845px 930px #fff, 1010px 1045px #fff, 1168px 890px #fff, 1320px 1030px #fff,
+    1480px 940px #fff, 1622px 1075px #fff, 1780px 930px #fff, 1912px 1040px #fff, 95px 1290px #fff,
+    251px 1160px #fff, 420px 1320px #fff, 580px 1180px #fff, 720px 1360px #fff, 890px 1215px #fff,
+    1030px 1340px #fff, 1190px 1188px #fff, 1360px 1362px #fff, 1510px 1220px #fff, 1668px 1345px #fff,
+    1818px 1180px #fff, 1940px 1320px #fff, 120px 1575px #fff, 280px 1450px #fff, 430px 1630px #fff,
+    590px 1490px #fff, 740px 1665px #fff, 900px 1518px #fff, 1054px 1680px #fff, 1210px 1526px #fff,
+    1378px 1668px #fff, 1540px 1512px #fff, 1700px 1685px #fff, 1850px 1522px #fff, 1970px 1660px #fff,
+    130px 1900px #fff, 300px 1790px #fff, 460px 1960px #fff, 610px 1828px #fff, 770px 1985px #fff,
+    930px 1846px #fff, 1080px 1970px #fff, 1240px 1824px #fff, 1410px 1968px #fff, 1570px 1836px #fff,
+    1730px 1974px #fff, 1888px 1840px #fff;
+  animation: programAnimStar 55s linear infinite;
+}
+
+.programs-space-bg #program-stars::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+.programs-space-bg #program-stars2 {
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    180px 250px #fff, 520px 180px #fff, 860px 270px #fff, 1210px 210px #fff, 1560px 260px #fff,
+    1870px 190px #fff, 120px 580px #fff, 430px 470px #fff, 760px 610px #fff, 1080px 500px #fff,
+    1410px 640px #fff, 1730px 530px #fff, 200px 900px #fff, 560px 820px #fff, 910px 960px #fff,
+    1260px 850px #fff, 1600px 980px #fff, 1900px 880px #fff, 150px 1240px #fff, 500px 1130px #fff,
+    850px 1270px #fff, 1180px 1150px #fff, 1520px 1300px #fff, 1840px 1190px #fff, 220px 1560px #fff,
+    600px 1450px #fff, 940px 1600px #fff, 1280px 1480px #fff, 1620px 1630px #fff, 1920px 1520px #fff,
+    280px 1870px #fff, 650px 1770px #fff, 1000px 1920px #fff, 1360px 1800px #fff, 1700px 1950px #fff;
+  animation: programAnimStar 100s linear infinite;
+}
+
+.programs-space-bg #program-stars2::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+.programs-space-bg #program-stars3 {
+  width: 3px;
+  height: 3px;
+  box-shadow:
+    320px 320px #fff, 910px 420px #fff, 1480px 300px #fff, 1820px 460px #fff,
+    260px 780px #fff, 840px 700px #fff, 1390px 860px #fff, 1760px 740px #fff,
+    350px 1220px #fff, 940px 1120px #fff, 1510px 1280px #fff, 1870px 1160px #fff,
+    420px 1650px #fff, 1030px 1540px #fff, 1600px 1710px #fff, 1930px 1600px #fff;
+  animation: programAnimStar 150s linear infinite;
+}
+
+.programs-space-bg #program-stars3::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+@keyframes programAnimStar {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}

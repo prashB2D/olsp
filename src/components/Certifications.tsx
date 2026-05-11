@@ -1,216 +1,175 @@
 import { motion } from "framer-motion";
+
 import orbitalLogo from "../assets/logo.png";
 
-/* ── Inline SVG logos ──────────────────────────────────────────────────── */
+import startupIndiaLogo from "../assets/startup-india.png";
+import startupKarnatakaLogo from "../assets/startup-karnataka.png";
+import isoBadgeLogo from "../assets/iso-badge.png";
+import msmeLogo from "../assets/msme.png";
 
-/* #startupindia — saffron text + green step icon */
-const StartupIndiaLogo = () => (
-  <svg viewBox="0 0 220 60" width="180" height="50" xmlns="http://www.w3.org/2000/svg">
-    <text x="0" y="46" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="38" fill="#FF6B00">
-      #startup
-    </text>
-    <text x="127" y="46" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="38" fill="#1A237E">
-      in
-    </text>
-    <text x="158" y="46" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="38" fill="#FF6B00">
-      d
-    </text>
-    <text x="181" y="46" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="38" fill="#1A237E">
-      i
-    </text>
-    <text x="193" y="46" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="38" fill="#FF6B00">
-      a
-    </text>
-    {/* Green staircase step icon */}
-    <polyline points="155,52 170,52 170,58 185,58" stroke="#138808" strokeWidth="4" fill="none" strokeLinecap="square" />
-  </svg>
-);
-
-/* Startup Karnataka — origami bird + text */
-const StartupKarnatakaLogo = () => (
-  <svg viewBox="0 0 160 140" width="120" height="105" xmlns="http://www.w3.org/2000/svg">
-    {/* Origami bird made of triangles */}
-    <polygon points="10,70 80,30 90,55" fill="#00a2ffff" />
-    <polygon points="90,55 80,30 130,25" fill="#E63012" />
-    <polygon points="90,55 130,25 140,50" fill="#c02810" />
-    <polygon points="10,70 90,55 60,80" fill="#c02810" />
-    <polygon points="90,55 140,50 120,65" fill="#E63012" />
-    {/* Beak */}
-    <polygon points="140,50 155,56 140,60" fill="#E63012" />
-    {/* Text */}
-    <text x="80" y="110" fontFamily="Arial, sans-serif" fontWeight="900" fontSize="16" fill="#1A237E" textAnchor="middle">STARTUP</text>
-    <text x="80" y="130" fontFamily="Arial, sans-serif" fontWeight="900" fontSize="16" fill="#1A237E" textAnchor="middle">KARNATAKA</text>
-  </svg>
-);
-
-/* ISO 9001:2015 circular badge */
-const IsoBadge = () => (
-  <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-    {/* Outer ring */}
-    <circle cx="60" cy="60" r="57" fill="none" stroke="#1565C0" strokeWidth="4" />
-    {/* Inner filled circle */}
-    <circle cx="60" cy="60" r="44" fill="#1565C0" />
-    <circle cx="60" cy="60" r="47" fill="none" stroke="#1565C0" strokeWidth="1.5" />
-    {/* ISO text */}
-    <text x="60" y="58" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="22" fill="white" textAnchor="middle">ISO</text>
-    <text x="60" y="74" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="12" fill="white" textAnchor="middle">9001:2015</text>
-    {/* Arc text - CERTIFIED top */}
-    <path id="topArc" d="M 15,60 A 45,45 0 0,1 105,60" fill="none" />
-    <text fontFamily="Arial, sans-serif" fontWeight="800" fontSize="11" fill="#1565C0" letterSpacing="3">
-      <textPath href="#topArc" startOffset="12%">CERTIFIED</textPath>
-    </text>
-    {/* Arc text - COMPANY bottom */}
-    <path id="botArc" d="M 15,62 A 45,45 0 0,0 105,62" fill="none" />
-    <text fontFamily="Arial, sans-serif" fontWeight="800" fontSize="11" fill="#1565C0" letterSpacing="3">
-      <textPath href="#botArc" startOffset="12%">COMPANY</textPath>
-    </text>
-  </svg>
-);
-
-/* ── Card data ─────────────────────────────────────────────────────────── */
-const certs = [
-  {
-    name: "Startup India",
-    sub: "DPIIT Recognised · Govt. of India",
-    Logo: StartupIndiaLogo,
-    accent: "#FF6B00",
-  },
-  {
-    name: "Startup Karnataka",
-    sub: "K-Tech Innovation Hub",
-    Logo: StartupKarnatakaLogo,
-    accent: "#E63012",
-  },
-  {
-    name: "ISO 9001:2015",
-    sub: "Certified Company",
-    Logo: IsoBadge,
-    accent: "#1565C0",
-  },
+/* ── Logo Array ─────────────────────────────────────── */
+const logos: string[] = [
+  startupIndiaLogo,
+  startupKarnatakaLogo,
+  isoBadgeLogo,
+  msmeLogo,
 ];
 
-/* ── Component ─────────────────────────────────────────────────────────── */
-const Certifications = () => (
-  <section className="relative py-24 border-y border-border">
-    <div className="container mx-auto px-4">
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="font-mono text-xs tracking-[0.3em] text-muted-foreground text-center mb-14"
-      >
-        — CERTIFICATIONS &amp; RECOGNITION —
-      </motion.p>
+/* duplicate once for seamless infinite loop */
+const marqueeLogos: string[] = [...logos, ...logos];
 
-      {/* Featured company logo */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.88 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "3.5rem", gap: "1.2rem" }}
+const Certifications: React.FC = () => {
+  return (
+    <section
+      className="relative overflow-hidden py-32"
+      style={{
+        background: "#000000",
+      }}
+    >
+      {/* ── Removed Smoky Background ───────────────────── */}
+
+      {/* ── Main Content ───────────────────────── */}
+      <div
+        className="container mx-auto px-4"
+        style={{
+          position: "relative",
+          zIndex: 2,
+        }}
       >
-        <div style={{ position: "relative" }}>
-          {/* Orbital glow */}
-          <div style={{
-            position: "absolute", inset: "-40%",
-            borderRadius: "50%",
-            background: "radial-gradient(ellipse, rgba(160,160,255,0.14) 0%, transparent 65%)",
-            pointerEvents: "none",
-          }} />
+        {/* Heading */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="font-mono text-xs tracking-[0.35em] text-center text-white/50 mb-16"
+        >
+          — CERTIFICATIONS & RECOGNITION —
+        </motion.p>
+
+        {/* ── Main Logo ───────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "8rem",
+          }}
+        >
           <img
             src={orbitalLogo}
             alt="Orbital Learn"
+            draggable={false}
             style={{
-              width: 240,
+              width: "clamp(260px, 34vw, 420px)",
               height: "auto",
-              /* Same treatment as Navbar: brightness(0) makes it black, invert(1) flips to white */
-              filter: "brightness(0) invert(1)",
-              opacity: 0.95,
-              position: "relative",
-              zIndex: 1,
-              display: "block",
+              userSelect: "none",
+              filter:
+                "brightness(0) invert(1) drop-shadow(0 0 28px rgba(255,255,255,0.22))",
             }}
           />
-        </div>
-        {/* Brand name — matches Navbar style */}
-        <p style={{
-          fontFamily: "inherit",
-          fontWeight: 700,
-          fontSize: "1rem",
-          letterSpacing: "0.25em",
-          color: "#fff",
-        }}>
-          ORBITAL<span style={{ color: "rgba(255,255,255,0.4)" }}>.</span>LEARN
-        </p>
-      </motion.div>
+        </motion.div>
 
-      {/* Separator */}
-      <div style={{
-        textAlign: "center",
-        marginBottom: "3rem",
-        color: "rgba(255,255,255,0.18)",
-        fontSize: "0.68rem",
-        letterSpacing: "0.35em",
-        fontFamily: "monospace",
-      }}>
-        RECOGNISED BY
-      </div>
+        {/* ── Ultra Smooth Marquee ───────────────── */}
+        <div
+          style={{
+            overflow: "hidden",
+            width: "100%",
+            position: "relative",
+          }}
+        >
+          {/* Left Fade */}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: "150px",
+              height: "100%",
+              zIndex: 10,
+              pointerEvents: "none",
+              background:
+                "linear-gradient(to right, #02030A 0%, transparent 100%)",
+            }}
+          />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        {certs.map(({ name, sub, Logo, accent }, i) => (
+          {/* Right Fade */}
+          <div
+            style={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              width: "150px",
+              height: "100%",
+              zIndex: 10,
+              pointerEvents: "none",
+              background:
+                "linear-gradient(to left, #02030A 0%, transparent 100%)",
+            }}
+          />
+
+          {/* Marquee Track */}
           <motion.div
-            key={name}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.13, duration: 0.6, ease: "easeOut" }}
-            whileHover={{ scale: 1.04, y: -4 }}
+            animate={{
+              x: ["0%", "-50%"],
+            }}
+            transition={{
+              ease: "linear",
+
+              /* ultra smooth slow movement */
+              duration: 10,
+
+              repeat: Infinity,
+            }}
             style={{
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
-              textAlign: "center",
-              padding: "2.5rem 1.5rem 2rem",
-              borderRadius: "1.25rem",
-              border: `1px solid ${accent}30`,
-              background: "rgba(255,255,255,0.025)",
-              backdropFilter: "blur(12px)",
-              gap: "1.25rem",
-              transition: "border-color 0.3s, box-shadow 0.3s",
-              boxShadow: `0 4px 40px ${accent}10`,
+              gap: "8rem",
+              width: "max-content",
+
+              /* performance optimization */
+              willChange: "transform",
+              transform: "translate3d(0,0,0)",
+              WebkitTransform: "translate3d(0,0,0)",
             }}
           >
-            {/* Logo */}
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "center",
-              height: 110,
-              filter: "drop-shadow(0 0 8px rgba(255,255,255,0.05))",
-            }}>
-              <Logo />
-            </div>
+            {marqueeLogos.map((logo: string, index: number) => (
+              <div
+                key={index}
+                style={{
+                  flexShrink: 0,
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="certificate"
+                  draggable={false}
+                  loading="eager"
+                  style={{
+                    width: "220px",
+                    height: "auto",
+                    objectFit: "contain",
+                    display: "block",
 
-            {/* Labels */}
-            <div>
-              <p style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff", marginBottom: 4 }}>
-                {name}
-              </p>
-              <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", letterSpacing: "0.04em", lineHeight: 1.5 }}>
-                {sub}
-              </p>
-            </div>
+                    /* smooth rendering */
+                    transform: "translateZ(0)",
+                    WebkitTransform: "translateZ(0)",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
 
-            {/* Brand accent pip */}
-            <div style={{
-              width: 6, height: 6, borderRadius: "50%",
-              background: accent,
-              boxShadow: `0 0 10px 3px ${accent}66`,
-            }} />
+                    filter:
+                      "drop-shadow(0 0 20px rgba(255,255,255,0.12))",
+                  }}
+                />
+              </div>
+            ))}
           </motion.div>
-        ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Certifications;

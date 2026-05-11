@@ -1,0 +1,340 @@
+/* ========================================
+   IMPACT ROBOT - BB-8 Black Version
+   Pure CSS Art with Motion
+   
+   Features:
+   - Customizable via CSS variables
+   - Premium gradient-based design
+   - Smooth spring animations
+   - Non-intrusive z-index
+   - Responsive behavior
+   ======================================== */
+
+.impact-robot-container {
+  --bb8-bg: var(--robot-bg, #1a1a1a);
+  --accent: var(--robot-accent, #30d0de);
+  --bb8-diameter: 4.375em;
+  --radius: 99em;
+  --transition: 0.3s;
+  
+  /* Ensure robot stays behind important content */
+  --robot-z-index: 10;
+}
+
+/* ========================================
+   ROBOT WRAPPER - Absolute Positioning inside section
+   ======================================== */
+.bb8-scroll {
+  position: absolute;
+  z-index: var(--robot-z-index);
+  font-size: 23px; /* Additional 5% increase */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  
+  /* Absolute positioning - smooth horizontal movement */
+  margin: 0;
+  padding: 0;
+  
+  /* Smooth transitions for left */
+  transition: left 0.1s linear, right 0.1s linear;
+  
+  /* Ensure robot doesn't create layout shift */
+  will-change: left, right;
+  backface-visibility: hidden;
+}
+
+/* Mobile responsive font sizing */
+@media (max-width: 768px) {
+  .bb8-scroll {
+    font-size: 20px; /* Additional 5% increase */
+  }
+}
+
+@media (max-width: 480px) {
+  .bb8-scroll {
+    font-size: 17px; /* Additional 5% increase */
+  }
+}
+
+/* ========================================
+   HEAD CONTAINER - Rotation Origin
+   ======================================== */
+.bb8__head-container {
+  position: relative;
+  z-index: 2;
+  transform-origin: 1.25em 3.75em;
+}
+
+/* ========================================
+   HEAD STRUCTURE - Top Sphere Section
+   ======================================== */
+.bb8__head {
+  overflow: hidden;
+  margin-bottom: -0.188em;
+  width: 2.5em;
+  height: 1.688em;
+  background:
+    /* Top gray line */
+    linear-gradient(
+      transparent 0.063em,
+      dimgray 0.063em 0.313em,
+      transparent 0.313em 0.375em,
+      var(--accent) 0.375em 0.5em,
+      transparent 0.5em 1.313em,
+      silver 1.313em 1.438em,
+      transparent 1.438em
+    ),
+    /* Diagonal corners - left */
+    linear-gradient(
+      45deg,
+      transparent 0.188em,
+      var(--bb8-bg) 0.188em 1.25em,
+      transparent 1.25em
+    ),
+    /* Diagonal corners - right */
+    linear-gradient(
+      -45deg,
+      transparent 0.188em,
+      var(--bb8-bg) 0.188em 1.25em,
+      transparent 1.25em
+    ),
+    /* Bottom base */
+    linear-gradient(var(--bb8-bg) 1.25em, transparent 1.25em);
+  border-radius: var(--radius) var(--radius) 0 0;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0.063em 0.125em gray);
+}
+
+/* ========================================
+   HEAD - Eye/Lens (Depth detail)
+   ======================================== */
+.bb8__head::before {
+  content: "";
+  position: absolute;
+  width: 0.563em;
+  height: 0.563em;
+  background:
+    /* Red lens reflection */
+    radial-gradient(0.125em circle at 0.25em 0.375em, red, transparent),
+    /* White highlight */
+    radial-gradient(0.063em circle at 0.375em 0.188em, var(--bb8-bg) 50%, transparent 100%),
+    /* Main lens shading */
+    linear-gradient(45deg, #000 0.188em, dimgray 0.313em 0.375em, #000 0.5em);
+  border-radius: var(--radius);
+  top: 0.413em;
+  left: 50%;
+  transform: translate(-50%);
+  box-shadow:
+    0 0 0 0.089em lightgray,
+    0.563em 0.281em 0 -0.148em,
+    0.563em 0.281em 0 -0.1em var(--bb8-bg),
+    0.563em 0.281em 0 -0.063em;
+  z-index: 1;
+}
+
+/* ========================================
+   HEAD - Bottom Accent Stripe
+   ======================================== */
+.bb8__head::after {
+  content: "";
+  position: absolute;
+  bottom: 0.375em;
+  left: 0;
+  width: 100%;
+  height: 0.188em;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0.125em,
+    transparent 0.125em 0.188em,
+    var(--accent) 0.188em 0.313em,
+    transparent 0.313em 0.375em,
+    var(--accent) 0.375em 0.938em,
+    transparent 0.938em 1em,
+    var(--accent) 1em 1.125em,
+    transparent 1.125em 1.875em,
+    var(--accent) 1.875em 2em,
+    transparent 2em 2.063em,
+    var(--accent) 2.063em 2.25em,
+    transparent 2.25em 2.313em,
+    var(--accent) 2.313em 2.375em,
+    transparent 2.375em 2.438em,
+    var(--accent) 2.438em
+  );
+}
+
+/* ========================================
+   ANTENNAS - Structural Details
+   ======================================== */
+.bb8__antenna {
+  position: absolute;
+  transform: translateY(-90%);
+  width: 0.059em;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+/* Right antenna with black tip and silver base */
+.bb8__antenna:nth-child(1) {
+  height: 0.938em;
+  right: 0.938em;
+  background: linear-gradient(#000 0.188em, silver 0.188em);
+}
+
+/* Center antenna - silver */
+.bb8__antenna:nth-child(2) {
+  height: 0.375em;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  background: silver;
+}
+
+/* ========================================
+   BODY SPHERE - Main Spherical Structure
+   ======================================== */
+.bb8__body {
+  width: 4.375em;
+  height: 4.375em;
+  background: var(--bb8-bg);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background:
+    /* Vertical accent stripes - left and right */
+    linear-gradient(
+      -90deg,
+      var(--bb8-bg) 4%,
+      var(--accent) 4% 10%,
+      transparent 10% 90%,
+      var(--accent) 90% 96%,
+      var(--bb8-bg) 96%
+    ),
+    /* Horizontal accent stripes - top and bottom */
+    linear-gradient(
+      var(--bb8-bg) 4%,
+      var(--accent) 4% 10%,
+      transparent 10% 90%,
+      var(--accent) 90% 96%,
+      var(--bb8-bg) 96%
+    ),
+    /* Vertical silver line - right side */
+    linear-gradient(
+      to right,
+      transparent 2.156em,
+      silver 2.156em 2.219em,
+      transparent 2.188em
+    ),
+    /* Horizontal silver line - middle */
+    linear-gradient(
+      transparent 2.156em,
+      silver 2.156em 2.219em,
+      transparent 2.188em
+    );
+  background-color: var(--bb8-bg);
+}
+
+/* ========================================
+   BODY - Dot Pattern (Visual Interest)
+   ======================================== */
+.bb8__body::after {
+  content: "";
+  bottom: 1.5em;
+  left: 0.563em;
+  position: absolute;
+  width: 0.188em;
+  height: 0.188em;
+  /* Dark dots for black robot */
+  background: rgb(100, 100, 100);
+  color: rgb(100, 100, 100);
+  border-radius: 50%;
+  box-shadow:
+    0.875em 0.938em,
+    0 -1.25em,
+    0.875em -2.125em,
+    2.125em -2.125em,
+    3.063em -1.25em,
+    3.063em 0,
+    2.125em 0.938em;
+}
+
+/* ========================================
+   BODY - Center Circle Detail Ring
+   ======================================== */
+.bb8__body::before {
+  content: "";
+  width: 2.625em;
+  height: 2.625em;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0.1;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.313em solid var(--accent);
+  background:
+    /* Dark center dot */
+    radial-gradient(1em circle at center, rgb(80, 80, 80) 50%, transparent 51%),
+    /* Light ring */
+    radial-gradient(1.25em circle at center, var(--bb8-bg) 50%, transparent 51%),
+    /* Vertical divider */
+    linear-gradient(-90deg, transparent 42%, var(--accent) 42% 58%, transparent 58%),
+    /* Horizontal divider */
+    linear-gradient(var(--bb8-bg) 42%, var(--accent) 42% 58%, var(--bb8-bg) 58%);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+@media (max-width: 768px) {
+  .bb8-scroll {
+    /* Hide on smaller tablets in landscape */
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .bb8-scroll {
+    /* Very subtle on mobile - doesn't interfere */
+    opacity: 0.5;
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   DARK MODE VARIANT (Optional Future)
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+  .impact-robot-container {
+    /* Can be overridden via props if needed */
+    --bb8-bg: var(--robot-bg, #0a0a0a);
+    --accent: var(--robot-accent, #00ffff);
+  }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+.bb8-scroll {
+  /* GPU acceleration */
+  transform: translateZ(0);
+}
+
+.bb8__head-container,
+.bb8__body {
+  /* Smooth animations */
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* ========================================
+   ACCESSIBILITY - Reduced Motion Support
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .bb8-scroll {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

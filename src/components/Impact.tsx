@@ -36,7 +36,7 @@ const Impact = () => {
       <ImpactRobot 
         anchorRef={sectionRef} 
         colors={{ bg: '#1a1a1a', accent: '#30d0de' }} 
-        topOffset={-40} 
+        topOffset={-4} 
       />
       
       <div className="container mx-auto px-4 relative z-10">

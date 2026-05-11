@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type RefObject } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { motion, useSpring, useTransform } from 'framer-motion';
 import './ImpactRobot.css';
 
 interface ImpactRobotProps {
@@ -51,12 +51,16 @@ export default function ImpactRobot({
   const lastScrollY = useRef(0);
   const lastTime = useRef(Date.now());
   const scrollVelocityRef = useRef(0);
+  const scrollProgressRef = useRef(0);
 
   const trackedAnchorRef = anchorRef ?? internalAnchorRef;
+  const clampedTopOffset = Math.max(0, Math.min(100, topOffset));
 
   // Smooth spring animations for premium feel
   const headRotation = useSpring(0, { stiffness: 100, damping: 20 });
   const bodyRotation = useSpring(45, { stiffness: 50, damping: 15 });
+  const xPosition = useSpring(0, { stiffness: 120, damping: 20 });
+  const leftPosition = useTransform(xPosition, (value) => `${value}%`);
 
   useEffect(() => {
     const target = trackedAnchorRef.current;
@@ -74,15 +78,20 @@ export default function ImpactRobot({
         return;
       }
 
-      // Start moving when the section top is 70% down the screen (so it's clearly visible)
-      // End moving when the section top reaches the top of the screen
-      const startOffset = windowHeight * 0.7; 
-      const endOffset = 0; 
+      // Start moving when the section top enters from the bottom of the viewport
+      // and finish when the section reaches the top of the viewport (so user can see it finish)
+      const startOffset = windowHeight;
+      const endOffset = 0;
       const currentOffset = rect.top;
-      
       const fullRange = startOffset - endOffset;
       const progress = Math.max(0, Math.min(1, (startOffset - currentOffset) / fullRange));
-      setScrollProgress(progress);
+      
+      xPosition.set(progress * 95);
+
+      if (Math.abs(progress - scrollProgressRef.current) > 0.003) {
+        scrollProgressRef.current = progress;
+        setScrollProgress(progress);
+      }
 
       // Velocity calculation for head tilt
       const now = Date.now();
@@ -94,11 +103,11 @@ export default function ImpactRobot({
       lastTime.current = now;
 
       // Head tilts based on velocity
-      const tilt = Math.max(-25, Math.min(25, velocity * 50));
+      const tilt = Math.max(-20, Math.min(20, velocity * 30));
       headRotation.set(tilt);
 
-      // Body rolls continuously
-      const rollAmount = progress * 720;
+      // Body rolls continuously but not too fast
+      const rollAmount = progress * 360;
       bodyRotation.set(45 + rollAmount);
     };
 
@@ -134,7 +143,6 @@ export default function ImpactRobot({
 
   // Robot moves horizontally from left to right as we scroll down
   // Starts on the left side (0%) and moves to the right side (100%)
-  const position = scrollProgress * 100;
 
   return (
     <>
@@ -152,8 +160,8 @@ export default function ImpactRobot({
           <motion.div
             className="bb8-scroll robot-black"
             style={{
-              left: `${position}%`,
-              top: `${topOffset}px`, // Fixed vertical position inside relative container
+              left: leftPosition,
+              top: `${clampedTopOffset}%`, // Fixed vertical position inside relative container
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

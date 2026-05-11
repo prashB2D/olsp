@@ -31,7 +31,7 @@ const Navbar = () => {
     >
       <nav className="container mx-auto flex items-center justify-between py-4">
         <a href="#" className="flex items-center gap-2 group">
-          <img src={logo} alt="Orbital Learn" className="h-10 w-10 invert brightness-0 group-hover:rotate-12 transition-transform duration-500" />
+          <img src={logo} alt="Orbital Learn" className="h-12 w-auto max-w-[3.25rem] object-contain invert brightness-0 group-hover:rotate-12 transition-transform duration-500" />
           <span className="font-display text-sm sm:text-base font-bold tracking-widest">ORBITAL<span className="text-primary">.</span>LEARN</span>
         </a>
         <ul className="hidden lg:flex items-center gap-8 text-sm">

@@ -12,6 +12,7 @@ import AiMlSolutions from "./pages/solutions/AiMlSolutions.tsx";
 import EnterpriseApps from "./pages/solutions/EnterpriseApps.tsx";
 import OrbitalLearnPage from "./pages/solutions/OrbitalLearnPage.tsx";
 import TalentRepository from "./pages/solutions/TalentRepository.tsx";
+import QuizLicense from "./pages/QuizLicense.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/solutions/enterprise-applications" element={<EnterpriseApps />} />
             <Route path="/solutions/orbital-learn" element={<OrbitalLearnPage />} />
             <Route path="/solutions/talent-repository" element={<TalentRepository />} />
+            <Route path="/quiz-license" element={<QuizLicense />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

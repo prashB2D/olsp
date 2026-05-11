@@ -15,7 +15,7 @@ const Footer = () => (
       <div className="grid md:grid-cols-5 gap-10 mb-12">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
-            <img src={logo} alt="Orbital Learn" className="h-10 w-10 invert brightness-0" />
+            <img src={logo} alt="Orbital Learn" className="h-12 w-auto max-w-[3.25rem] object-contain invert brightness-0" />
             <span className="font-display font-bold tracking-widest">ORBITAL.LEARN</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
@@ -56,6 +56,9 @@ const Footer = () => (
       </div>
       <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-xs font-mono text-muted-foreground">© 2026 ORBITAL LEARN PRIVATE LIMITED. All rights reserved.</p>
+        <div className="flex gap-4 items-center">
+          <a href="/quiz-license" className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors">Quiz License Agreement</a>
+        </div>
         <p className="text-xs font-mono text-muted-foreground tracking-widest">— BUILT IN ORBIT —</p>
       </div>
     </div>

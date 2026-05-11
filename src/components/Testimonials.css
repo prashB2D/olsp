@@ -138,52 +138,7 @@
   margin: 40px auto 0 auto; /* Center in container with top margin */
 }
 
-.content {
-  background-color: #ffffff50;
-  overflow: hidden;
-  position: relative;
-  width: calc(100% - calc(var(--pd) * 2));
-  height: calc(100% - calc(var(--pd) * 2));
-  border-radius: calc(var(--round) - var(--pd));
-}
-.content > span {
-  font-size: 300px;
-  font-weight: 800;
-  line-height: 0.75;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  inset: 50% 0 0 50%;
-  transform: translate(-50%, -50%);
-  background-clip: text;
-  -webkit-text-stroke-width: 3px;
-  color: transparent;
-  opacity: 0;
-  background-image: linear-gradient(-45deg, #ffffff25 0%, #ffffffac 100%);
-  animation: opacity 0s cubic-bezier(1, 0, 0, 1) forwards var(--delay) reverse;
-}
-.content > svg {
-  height: 66px;
-  width: 66px;
-  position: absolute;
-  inset: 50% 0 0 50%;
-  opacity: 1;
-  animation: opacity 84s cubic-bezier(1, 0, 0, 1) forwards calc(var(--delay) - 43s);
-  transform: translate(-50%, -50%);
-}
-.anim-card:nth-child(1) {
-  --delay: 43s;
-}
-.anim-card:nth-child(2) {
-  --delay: 73s;
-}
-.anim-card:nth-child(3) {
-  --delay: 103s;
-}
-@keyframes opacity {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
+
 
 .anim-card {
   display: flex;
@@ -191,7 +146,7 @@
   justify-content: center;
   position: absolute;
   overflow: hidden;
-  animation: rotating 90s cubic-bezier(0.75, 0, 0, 1.01) infinite 0s;
+  animation: rotating 15s linear infinite 0s;
   border-radius: var(--round);
   background: var(--bg);
   order: var(--order);

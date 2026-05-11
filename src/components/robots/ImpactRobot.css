@@ -37,11 +37,8 @@
   margin: 0;
   padding: 0;
   
-  /* Smooth transitions for left */
-  transition: left 0.1s linear, right 0.1s linear;
-  
   /* Ensure robot doesn't create layout shift */
-  will-change: left, right;
+  will-change: left, transform;
   backface-visibility: hidden;
 }
 
